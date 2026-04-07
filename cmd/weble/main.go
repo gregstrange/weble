@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"goweb/cmd/weble/web"
+)
 
 func main() {
-	fmt.Println("Hello, Weble!")
+
+	err := web.Run()
+	fmt.Printf("Program exited with error: %s\n", err)
 }
