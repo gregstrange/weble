@@ -6,23 +6,7 @@
         <a href="/home" style="text-decoration: none;"><b>WEBLE</b></a>
         {{if not .HideMenu}}
         <ul>
-            {{if .LoggedIn}}
-            <li><a href="/leaderboard">Leaderboard</a></li>
-            <li><a href="/mytrips">My Trips</a></li>
-            <li><a href="/logtrip">Log Trip</a></li>
-            <li>
-            <div class="w3-dropdown-hover" style="background-color:white">
-                <a href="#">Account</a>
-                <div class="w3-dropdown-content w3-bar-block w3-border">
-                  <a href="/usersettings" class="w3-bar-item">Settings</a>
-                  <a href="/changepassword" class="w3-bar-item">Change Password</a>
-                  <a href="/logout" class="w3-bar-item">Sign Out</a>
-                </div>
-              </div>
-            </li>
-            {{else}}
-            <li><a href="/login">Sign In</a></li>
-            {{end}}
+            <li><a href="/scan">Scan</a></li>
             <li><a href="/about">About</a></li>
         </ul>
         {{end}}

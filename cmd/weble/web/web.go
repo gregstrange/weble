@@ -15,6 +15,10 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "about.html", nil)
 }
 
+func scanHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl.ExecuteTemplate(w, "scan.html", nil)
+}
+
 func Run() error {
 	tmpl = template.Must(template.ParseGlob("web/templates/*.html"))
 
@@ -23,5 +27,6 @@ func Run() error {
 
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/about", aboutHandler)
+	http.HandleFunc("/scan", scanHandler)
 	return http.ListenAndServe(":8080", nil)
 }
