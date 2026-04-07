@@ -1,6 +1,8 @@
 package web
 
 import (
+	"fmt"
+	"goweb/pkg/ble"
 	"html/template"
 	"net/http"
 )
@@ -16,7 +18,13 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func scanHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl.ExecuteTemplate(w, "scan.html", nil)
+	result, err := ble.Scan()
+	if err != nil {
+		http.Error(w, "Error scanning BLE devices: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Printf(result)
+	tmpl.ExecuteTemplate(w, "scan.html", result)
 }
 
 func Run() error {
