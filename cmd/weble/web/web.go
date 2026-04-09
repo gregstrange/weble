@@ -18,14 +18,15 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func scanHandler(w http.ResponseWriter, r *http.Request) {
-	result, err := ble.Scan()
+	dm, err := ble.Scan()
 	if err != nil {
 		http.Error(w, "Error scanning BLE devices: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf(result)
+	s := dm.String()
+	fmt.Printf(s)
 	data := &map[string]any{
-		"ScanResults": result,
+		"ScanResults": s,
 	}
 	tmpl.ExecuteTemplate(w, "scan.html", data)
 }

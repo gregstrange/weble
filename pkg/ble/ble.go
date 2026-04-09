@@ -19,7 +19,9 @@ var (
 	du     = flag.Duration("du", 5*time.Second, "scanning duration")
 )
 
-var deviceMap map[string]ble.Advertisement
+type DeviceMap map[string]ble.Advertisement
+
+var deviceMap DeviceMap
 
 var companyNames map[uint16]string = map[uint16]string{
 	0x004c: "Apple",
@@ -29,14 +31,14 @@ var companyNames map[uint16]string = map[uint16]string{
 	0x02e1: "Victron Energy",
 }
 
-func Scan() (string, error) {
+func Scan() (DeviceMap, error) {
 	deviceMap = make(map[string]ble.Advertisement)
 	flag.Parse()
 
 	d, err := dev.NewDevice(*device)
 	if err != nil {
 		fmt.Printf("can't new device : %s", err)
-		return "", err
+		return nil, err
 	}
 	ble.SetDefaultDevice(d)
 
@@ -44,18 +46,18 @@ func Scan() (string, error) {
 	fmt.Printf("Scanning for %s...\n", *du)
 	ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), *du))
 	chkErr(ble.Scan(ctx, false, advHandler, nil))
-	return printDevices(), nil
+	return deviceMap, nil
 }
 
 func advHandler(a ble.Advertisement) {
 	deviceMap[a.Addr().String()] = a
 }
 
-func printDevices() string {
+func (dm DeviceMap) String() string {
 	sb := strings.Builder{}
 	devices := make([]ble.Advertisement, 0)
 
-	for _, a := range deviceMap {
+	for _, a := range dm {
 		devices = append(devices, a)
 	}
 
