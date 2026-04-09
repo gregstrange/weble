@@ -24,7 +24,10 @@ func scanHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Printf(result)
-	tmpl.ExecuteTemplate(w, "scan.html", result)
+	data := &map[string]any{
+		"ScanResults": result,
+	}
+	tmpl.ExecuteTemplate(w, "scan.html", data)
 }
 
 func Run() error {
@@ -36,5 +39,6 @@ func Run() error {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/scan", scanHandler)
+	fmt.Printf("Starting server on :8080\n")
 	return http.ListenAndServe(":8080", nil)
 }
