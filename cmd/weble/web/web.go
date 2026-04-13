@@ -17,6 +17,14 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "about.html", nil)
 }
 
+type advert struct {
+	Addr        string
+	Connectable bool
+	RSSI        int
+	LocalName   string
+	Company     string
+}
+
 func scanHandler(w http.ResponseWriter, r *http.Request) {
 	dm, err := ble.Scan()
 	if err != nil {
@@ -24,9 +32,22 @@ func scanHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	s := dm.String()
-	fmt.Printf(s)
+	fmt.Print(s)
+
+	// must convert the goble.Advertisement structs which has accessor functions for each property into
+	// a format with values that can be displayed by the template
+	rows := make([]advert, 0)
+	for _, a := range dm {
+		row := advert{}
+		row.Addr = a.Addr().String()
+		row.Connectable = a.Connectable()
+		row.RSSI = a.RSSI()
+		row.LocalName = a.LocalName()
+		row.Company = ble.GetCompanyName(a)
+		rows = append(rows, row)
+	}
 	data := &map[string]any{
-		"ScanResults": s,
+		"Rows": rows,
 	}
 	tmpl.ExecuteTemplate(w, "scan.html", data)
 }

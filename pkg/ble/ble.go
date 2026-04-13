@@ -83,7 +83,7 @@ func (dm DeviceMap) String() string {
 		if len(a.ManufacturerData()) > 0 {
 			fmt.Fprintf(&sb, "%s MD: %X", comma, a.ManufacturerData())
 		}
-		if company := getCompanyName(a); len(company) > 0 {
+		if company := GetCompanyName(a); len(company) > 0 {
 			fmt.Fprintf(&sb, ", %s", company)
 		}
 		fmt.Fprintf(&sb, "\n")
@@ -91,7 +91,7 @@ func (dm DeviceMap) String() string {
 	return sb.String()
 }
 
-func getCompanyName(a ble.Advertisement) string {
+func GetCompanyName(a ble.Advertisement) string {
 	d := a.ManufacturerData()
 	if len(d) < 2 {
 		return ""

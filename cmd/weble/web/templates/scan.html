@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <title>"Withercup Home"</title>
+    <title>"Weble Scan"</title>
 </head>
 
 {{template "header" .}}
@@ -15,7 +15,24 @@
 <body>
 
     <div class="w3-container" style="margin-left: 50px">
-        <p>{{.ScanResults}}</p>
+        <table id='scanresults' class="w3-table-all">
+            <tr>
+                <th>Address</th>
+                <th>Connectable</th>
+                <th>RSSI</th>
+                <th>Name</th>
+                <th>Company</th>
+            </tr>
+            {{range .Rows}}
+                <tr class="item">
+                    <td>{{.Addr}}</td>
+                    <td>{{.Connectable}}</td>
+                    <td>{{.RSSI}}</td>
+                    <td>{{.LocalName}}</td>
+                    <td>{{.Company}}</td>
+                </tr>
+            {{end}}
+        </table>
     </div>
 </body>
 
