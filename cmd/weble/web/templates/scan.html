@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
     <title>"Weble Scan"</title>
 </head>
 
@@ -17,11 +18,11 @@
     <div class="w3-container" style="margin-left: 50px">
         <table id='scanresults' class="w3-table-all">
             <tr>
-                <th>Address</th>
-                <th>Connectable</th>
-                <th>RSSI</th>
-                <th>Name</th>
-                <th>Company</th>
+                <th onclick="w3.sortHTML('#scanresults','.item','td:nth-child(1)', true)" style="cursor: pointer;">Address</th>
+                <th onclick="w3.sortHTML('#scanresults','.item','td:nth-child(2)', true)" style="cursor: pointer;">Connectable</th>
+                <th onclick="w3.sortHTML('#scanresults','.item','td:nth-child(3)', true)" style="cursor: pointer;">RSSI</th>
+                <th onclick="w3.sortHTML('#scanresults','.item','td:nth-child(4)', true)" style="cursor: pointer;">Name</th>
+                <th onclick="w3.sortHTML('#scanresults','.item','td:nth-child(5)', true)" style="cursor: pointer;">Company</th>
             </tr>
             {{range .Rows}}
                 <tr class="item">
